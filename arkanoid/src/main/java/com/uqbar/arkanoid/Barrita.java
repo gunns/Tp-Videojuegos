@@ -9,18 +9,18 @@ import com.uqbar.vainilla.appearances.Circle;
 import com.uqbar.vainilla.appearances.Rectangle;
 import com.uqbar.vainilla.events.constants.Key;
 
-public class Barrita extends GameComponent<DemoScene>{
+public class Barrita extends GameComponent<ArkanoidScene>{
 
 	public boolean estaCreciendoX;
 	private double velocity;
 	private Dimension gameDimension;
 	
 	public Barrita(Dimension dim){
-		this.setAppearance(new Rectangle(Color.black,30,5));
+		this.setAppearance(new Rectangle(Color.black,50,10));
 		this.gameDimension= dim;
-		this.setX(800/2-this.getAppearance().getHeight());
+		this.setX(800/2-this.getAppearance().getWidth());
 		this.velocity=300;
-		this.setY(600-this.getAppearance().getWidth()-5);
+		this.setY(600-(this.getAppearance().getHeight())-5);
 	}
 	
 	public void update(DeltaState deltaState) {
@@ -45,7 +45,6 @@ public class Barrita extends GameComponent<DemoScene>{
 		
 		
 	}
-
 	private boolean noLlegoAlFinal() {
 		return this.getX()+this.getAppearance().getWidth()<=800;
 	}

@@ -7,7 +7,7 @@ import com.uqbar.vainilla.Game;
 import com.uqbar.vainilla.GameScene;
 
 
-public class DemoGame extends Game {
+public class ArkanoidGame extends Game {
 
 	private Dimension dimension;
 	private GameScene scene;
@@ -22,7 +22,7 @@ public class DemoGame extends Game {
 
 	@Override
 	protected void setUpScenes() {
-		this.scene = new DemoScene(dimension,250);
+		this.scene = new ArkanoidScene(dimension,250);
 		this.setCurrentScene(scene);
 		
 
@@ -36,12 +36,11 @@ public class DemoGame extends Game {
 
 	@Override
 	public String getTitle() {
-		return "Demo de Vainilla";
+		return "Arkanoid";
 	}
 	
 	public static void main(String[] args) {
-		new DesktopGameLauncher(new DemoGame()).launch();
-
+		new DesktopGameLauncher(new ArkanoidGame()).launch();
 	}
 
 }

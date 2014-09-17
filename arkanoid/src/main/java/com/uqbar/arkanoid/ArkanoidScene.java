@@ -2,16 +2,16 @@ package com.uqbar.arkanoid;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
+//import java.awt.Graphics2D;
 
-import com.uqbar.vainilla.DeltaState;
+//import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.GameScene;
-import com.uqbar.vainilla.appearances.Circle;
+//import com.uqbar.vainilla.appearances.Circle;
 import com.uqbar.vainilla.appearances.Rectangle;
-import com.uqbar.vainilla.events.constants.Key;
+//import com.uqbar.vainilla.events.constants.Key;
 
-public class DemoScene extends GameScene {
+public class ArkanoidScene extends GameScene {
 
 	private GameComponent<GameScene> backGround;
 	private Dimension gameDimension;
@@ -20,12 +20,12 @@ public class DemoScene extends GameScene {
 	private double velocity;
 	private Barrita barrita;
 	
-	public DemoScene(Dimension dim, double velocity){
+	public ArkanoidScene(Dimension dim, double velocity){
 		super();
 		this.velocity=velocity;
 		this.buildBackground(Color.white);
-		this.pelotita= new Pelotita(this.velocity);
 		this.barrita=new Barrita(this.gameDimension);
+		this.pelotita= new Pelotita(this.velocity);
 		this.gameDimension= dim;
 		this.addComponent(pelotita);
 		this.addComponent(barrita);
@@ -64,5 +64,14 @@ public class DemoScene extends GameScene {
 		this.buildBackground(Color.white);
 		this.velocity=velocity;
 		this.playState = true;
+	}
+	
+	public boolean hayColision(){
+		return ( this.pelotita.getX()>=this.barrita.getX()-(this.barrita.getAppearance().getWidth()/2)
+				&& this.pelotita.getX()<=this.barrita.getX()+(this.barrita.getAppearance().getWidth()/2)
+				&& this.pelotita.getY()//+(this.pelotita.getAppearance().getHeight()/2)
+				>this.barrita.getY()-(this.barrita.getAppearance().getHeight()/2))
+				&& this.pelotita.getY()+(this.pelotita.getAppearance().getHeight()/2)
+				<this.barrita.getY()+(this.barrita.getAppearance().getHeight()/2);
 	}
 }

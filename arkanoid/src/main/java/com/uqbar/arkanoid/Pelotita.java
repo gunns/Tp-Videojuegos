@@ -7,11 +7,12 @@ import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.appearances.Circle;
 import com.uqbar.vainilla.events.constants.Key;
 
-public class Pelotita extends GameComponent<DemoScene>{
+public class Pelotita extends GameComponent<ArkanoidScene>{
 
 
 	private boolean playState = true;
 	private double velocity;
+	private Barrita barrita;
 	public boolean estaCreciendoX;
 	public boolean isEstaCreciendoX() {
 		return estaCreciendoX;
@@ -45,6 +46,9 @@ public class Pelotita extends GameComponent<DemoScene>{
 			}else {
 				mover(deltaState);
 			}
+			if(this.getScene().hayColision()){
+				this.estaCreciendoY=false;
+			}
 
 		} else if (deltaState.isKeyPressed(Key.S)) {
 			this.getScene().newGame(250);
@@ -75,12 +79,6 @@ public class Pelotita extends GameComponent<DemoScene>{
 				this.estaCreciendoY=true;
 			}
 		}
-
-
-
-
-
-
 	}
 
 }
