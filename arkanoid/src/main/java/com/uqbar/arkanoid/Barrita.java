@@ -5,22 +5,28 @@ import java.awt.Dimension;
 
 import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.GameComponent;
-import com.uqbar.vainilla.appearances.Circle;
 import com.uqbar.vainilla.appearances.Rectangle;
 import com.uqbar.vainilla.events.constants.Key;
 
 public class Barrita extends GameComponent<ArkanoidScene>{
 
 	public boolean estaCreciendoX;
-	private double velocity;
 	private Dimension gameDimension;
+	private boolean playState = true;
 	
-	public Barrita(Dimension dim){
+	public Barrita(Dimension dim, boolean playState){
 		this.setAppearance(new Rectangle(Color.black,50,10));
 		this.gameDimension= dim;
-		this.setX(800/2-this.getAppearance().getWidth());
-		this.velocity=500;
-		this.setY(600-(this.getAppearance().getHeight())-5);
+		this.playState = playState;
+		this.setX(this.gameDimension.getWidth()/2-this.getAppearance().getWidth());
+		this.setY(this.gameDimension.getHeight()-(this.getAppearance().getHeight())-5);
+	}
+	
+	protected boolean getPlayState() {
+		return this.playState;
+	}
+	protected void setPlayState(boolean playState){
+		this.playState = playState;
 	}
 	
 	public void update(DeltaState deltaState) {
@@ -33,20 +39,36 @@ public class Barrita extends GameComponent<ArkanoidScene>{
 	}
 
 	private void moverALaIzquierda(DeltaState deltaState) {
-		if (this.noLlegoAlComienzo()){
-			this.setX(this.getX()-this.getScene().getVelocity()* deltaState.getDelta());
+		if(!this.getScene().getSystemPause()){
+			if(!playState && !this.getScene().getPlayState()){
+				if (this.noLlegoAlComienzo()){
+					this.setX(this.getX()-this.getScene().getVelocity()* deltaState.getDelta());
+					this.getScene().getPelotita().newGamePos(this);
+				}
+			}else{
+				if (this.noLlegoAlComienzo()){
+					this.setX(this.getX()-this.getScene().getVelocity()* deltaState.getDelta());
+				}
+			}
 		}
 	}
 
 	private void moverALaDerecha(DeltaState deltaState) {
-		if (this.noLlegoAlFinal()){
-			this.setX(this.getX()+this.getScene().getVelocity()* deltaState.getDelta());
+		if(!this.getScene().getSystemPause()){
+			if(!playState && !this.getScene().getPlayState()){
+				if (this.noLlegoAlFinal()){
+					this.setX(this.getX()+this.getScene().getVelocity()* deltaState.getDelta());
+					this.getScene().getPelotita().newGamePos(this);
+				}
+			}else{
+				if (this.noLlegoAlFinal()){
+					this.setX(this.getX()+this.getScene().getVelocity()* deltaState.getDelta());
+				}
+			}
 		}
-		
-		
 	}
 	private boolean noLlegoAlFinal() {
-		return this.getX()+this.getAppearance().getWidth()<=800;
+		return this.getX()+this.getAppearance().getWidth()<=gameDimension.getWidth();
 	}
 	private boolean noLlegoAlComienzo(){
 		return this.getX()>=0;

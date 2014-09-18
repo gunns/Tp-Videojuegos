@@ -16,17 +16,19 @@ public class ArkanoidScene extends GameScene {
 	private GameComponent<GameScene> backGround;
 	private Dimension gameDimension;
 	private Pelotita pelotita;
-	private boolean playState = true;
+	private boolean playState = false;
 	private double velocity;
 	private Barrita barrita;
+	private boolean systemPause = false;
 	
 	public ArkanoidScene(Dimension dim, double velocity){
 		super();
 		this.velocity=velocity;
-		this.buildBackground(Color.white);
-		this.barrita=new Barrita(this.gameDimension);
-		this.pelotita= new Pelotita(this.velocity);
 		this.gameDimension= dim;
+		this.buildBackground(Color.white);
+		this.barrita=new Barrita(this.gameDimension, playState);
+		this.pelotita= new Pelotita(this.gameDimension);
+		pelotita.newGamePos(barrita);
 		this.addComponent(pelotita);
 		this.addComponent(barrita);
 	}
@@ -41,29 +43,55 @@ public class ArkanoidScene extends GameScene {
 		this.addComponent(this.backGround);
 	}
 
-	protected void stop() {
-		this.velocity= 0d;
-		this.playState=false;
-		
-	}
+	
 	protected boolean getPlayState() {
 		return this.playState;
+	}
+	protected void setPlayState(boolean playState){
+		this.playState = playState;
+	}
+	protected boolean getSystemPause() {
+		return this.systemPause;
+	}
+	protected void setSystemPause(boolean SysPause){
+		this.systemPause = SysPause;
 	}
 	protected double getVelocity() {
 		return this.velocity;
 	}
+	protected Pelotita getPelotita(){
+		return this.pelotita;
+	}
+	
+	protected void youLose(){
+//		Throw message here if someone lose
+		resetBall();
+	}
+	
+	private void resetBall() {
+		newGame(250);
+		setSystemPause(false);		
+	}
+
+
 	void newGame(double velocity) {
 		this.buildBackground(Color.white);
-		this.pelotita.setX(400);
-		this.pelotita.setY(550);
-		this.velocity=velocity;
-		this.playState = true;
-		this.pelotita.setEstaCreciendoY(false);
+		this.barrita.setX(800/2-this.barrita.getAppearance().getWidth());
+		this.barrita.setY(600-(this.barrita.getAppearance().getHeight())-5);
+		this.pelotita.newGamePos(barrita);
+		this.velocity = velocity;
+		this.playState = false;
+		
 	}
 	void continueGame(double velocity){
 		this.buildBackground(Color.white);
 		this.velocity=velocity;
 		this.playState = true;
+	}
+	protected void stop() {
+		this.velocity= 0d;
+		this.playState=false;
+		
 	}
 	
 	public boolean hayColision(){
