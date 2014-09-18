@@ -19,7 +19,7 @@ public class Barrita extends GameComponent<ArkanoidScene>{
 		this.setAppearance(new Rectangle(Color.black,50,10));
 		this.gameDimension= dim;
 		this.setX(800/2-this.getAppearance().getWidth());
-		this.velocity=300;
+		this.velocity=500;
 		this.setY(600-(this.getAppearance().getHeight())-5);
 	}
 	
