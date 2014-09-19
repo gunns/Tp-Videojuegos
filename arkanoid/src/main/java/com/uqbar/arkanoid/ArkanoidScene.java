@@ -122,6 +122,17 @@ public class ArkanoidScene extends GameScene {
 		
 	}
 	
+	
+	public boolean hayColision(){
+                return ( this.pelotita.getX()+(this.pelotita.getAppearance().getWidth()/2)>=this.barrita.getX()
+                                && this.pelotita.getX()+(this.pelotita.getAppearance().getWidth()/2)<=this.barrita.getX()+(this.barrita.getAppearance().getWidth())
+                                && this.pelotita.getY()+(this.pelotita.getAppearance().getHeight())
+                                >this.barrita.getY())
+                                && (this.pelotita.getY()+(this.pelotita.getAppearance().getHeight())
+                                <this.barrita.getY()+this.barrita.getAppearance().getHeight()/2);
+                                }
+	
+	/*
 	public boolean hayColision(){
 		return ( this.pelotita.getX()-(this.pelotita.getAppearance().getWidth())>=this.barrita.getX()-(this.barrita.getAppearance().getWidth()/2)
 				&& this.pelotita.getX()-(this.pelotita.getAppearance().getWidth())<=this.barrita.getX()+(this.barrita.getAppearance().getWidth())
@@ -130,7 +141,7 @@ public class ArkanoidScene extends GameScene {
 				&& this.pelotita.getY()+(this.pelotita.getAppearance().getHeight()/2)
 				<this.barrita.getY()+(this.barrita.getAppearance().getHeight()/2);
 	}
-	
+	*/
 	public boolean ladrilloSeRompe(Ladrillo ladrillo) {
 		return ( coordPelotitaEnX() >= xLeft(ladrillo)
 				&& coordPelotitaEnX() <= xRight(ladrillo)
