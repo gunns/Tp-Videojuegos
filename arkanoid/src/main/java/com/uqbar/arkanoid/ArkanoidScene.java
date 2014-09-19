@@ -124,7 +124,7 @@ public class ArkanoidScene extends GameScene {
 	
 	public boolean hayColision(){
 		return ( this.pelotita.getX()-(this.pelotita.getAppearance().getWidth())>=this.barrita.getX()-(this.barrita.getAppearance().getWidth()/2)
-				&& this.pelotita.getX()-(this.pelotita.getAppearance().getWidth())<=this.barrita.getX()+(this.barrita.getAppearance().getWidth()/2)
+				&& this.pelotita.getX()-(this.pelotita.getAppearance().getWidth())<=this.barrita.getX()+(this.barrita.getAppearance().getWidth())
 				&& this.pelotita.getY()+(this.pelotita.getAppearance().getHeight()/2)
 				>this.barrita.getY())//-(this.barrita.getAppearance().getHeight()/2))
 				&& this.pelotita.getY()+(this.pelotita.getAppearance().getHeight()/2)
