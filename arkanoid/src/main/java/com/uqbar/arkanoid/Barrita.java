@@ -15,7 +15,7 @@ public class Barrita extends GameComponent<ArkanoidScene>{
 	private boolean playState = true;
 	
 	public Barrita(Dimension dim, boolean playState){
-		this.setAppearance(new Rectangle(Color.black,50,10));
+		this.setAppearance(new Rectangle(Color.black,80,10));
 		this.gameDimension= dim;
 		this.playState = playState;
 		this.setX(this.gameDimension.getWidth()/2-this.getAppearance().getWidth());
@@ -42,12 +42,12 @@ public class Barrita extends GameComponent<ArkanoidScene>{
 		if(!this.getScene().getSystemPause()){
 			if(!playState && !this.getScene().getPlayState()){
 				if (this.noLlegoAlComienzo()){
-					this.setX(this.getX()-this.getScene().getVelocity()* deltaState.getDelta());
+					this.setX(this.getX()- (this.getScene().getVelocity() + (this.getScene().getVelocity()/4) )* deltaState.getDelta());
 					this.getScene().getPelotita().newGamePos(this);
 				}
 			}else{
 				if (this.noLlegoAlComienzo()){
-					this.setX(this.getX()-this.getScene().getVelocity()* deltaState.getDelta());
+					this.setX(this.getX()-(this.getScene().getVelocity() + (this.getScene().getVelocity()/4))* deltaState.getDelta());
 				}
 			}
 		}
@@ -57,12 +57,12 @@ public class Barrita extends GameComponent<ArkanoidScene>{
 		if(!this.getScene().getSystemPause()){
 			if(!playState && !this.getScene().getPlayState()){
 				if (this.noLlegoAlFinal()){
-					this.setX(this.getX()+this.getScene().getVelocity()* deltaState.getDelta());
+					this.setX(this.getX()+(this.getScene().getVelocity()+ (this.getScene().getVelocity()/4))* deltaState.getDelta());
 					this.getScene().getPelotita().newGamePos(this);
 				}
 			}else{
 				if (this.noLlegoAlFinal()){
-					this.setX(this.getX()+this.getScene().getVelocity()* deltaState.getDelta());
+					this.setX(this.getX()+(this.getScene().getVelocity()+ (this.getScene().getVelocity()/4))* deltaState.getDelta());
 				}
 			}
 		}

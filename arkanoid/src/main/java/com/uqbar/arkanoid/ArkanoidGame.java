@@ -22,7 +22,7 @@ public class ArkanoidGame extends Game {
 
 	@Override
 	protected void setUpScenes() {
-		this.scene = new ArkanoidScene(dimension,250);
+		this.scene = new ArkanoidScene(dimension,300);
 		this.setCurrentScene(scene);
 		
 

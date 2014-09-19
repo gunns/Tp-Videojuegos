@@ -53,6 +53,75 @@ public class Pelotita extends GameComponent<ArkanoidScene> {
 			if (this.getScene().hayColision()) {
 				this.estaCreciendoY = false;
 			}
+			
+			if(this.getScene().hayColisionConUnLadrillo()){
+				
+				/*if(this.getScene().colisionEnX(this))
+					{
+					this.setEstaCreciendoX(!this.estaCreciendoX);
+					}
+			}
+			if(this.getScene().colisionEnY(this))
+				{
+				this.setEstaCreciendoY(!this.estaCreciendoY);
+				}
+	}
+	*/
+		//this.getScene().stop();
+	//}
+		if(this.getScene().colisionDerecha(this) && this.getScene().colisionInferior(this))
+		{
+		this.setEstaCreciendoX(true);
+		this.setEstaCreciendoY(true);
+		}
+		else
+		{
+		if(this.getScene().colisionDerecha(this) && this.getScene().colisionSuperior(this))
+			{
+			this.setEstaCreciendoX(true);
+			this.setEstaCreciendoY(false);
+			}
+		else
+		 if(this.getScene().colisionIzquierda(this) && this.getScene().colisionSuperior(this))
+			{
+			this.setEstaCreciendoX(false);
+			this.setEstaCreciendoY(false);
+			}
+		 else
+			 if(this.getScene().colisionIzquierda(this) && this.getScene().colisionInferior(this))
+				{
+				this.setEstaCreciendoX(true);
+				this.setEstaCreciendoY(true);
+				}
+			 else
+		 if(this.getScene().colisionDerecha(this))
+			{
+			this.setEstaCreciendoX(true);
+			}
+		 else
+		if(this.getScene().colisionIzquierda(this))
+		{
+			this.setEstaCreciendoX(false);
+		}
+		else
+		if(this.getScene().colisionSuperior(this))
+		{
+			this.setEstaCreciendoY(false);
+		}
+		else
+		if(this.getScene().colisionInferior(this))
+		{
+		this.setEstaCreciendoY(true);
+		}
+				
+	   }
+	}
+
+			
+			
+			
+			
+			
 
 		} else if (deltaState.isKeyPressed(Key.S)) {
 			this.getScene().newGame(250);
