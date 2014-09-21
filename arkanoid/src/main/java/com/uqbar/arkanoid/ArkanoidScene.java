@@ -4,14 +4,25 @@ import java.awt.Color;
 import java.awt.Dimension;
 //import java.awt.Graphics2D;
 
+import java.awt.Font;
+
 //import com.uqbar.vainilla.DeltaState;
 import com.uqbar.vainilla.GameComponent;
 import com.uqbar.vainilla.GameScene;
+import com.uqbar.vainilla.appearances.Label;
 //import com.uqbar.vainilla.appearances.Circle;
 import com.uqbar.vainilla.appearances.Rectangle;
 //import com.uqbar.vainilla.events.constants.Key;
 
 public class ArkanoidScene extends GameScene {
+	
+	private int puntos;
+	private Puntaje puntaje;
+	private int puntajeParaVida;
+	private int nuevoPuntajeParaVida;
+	
+	
+	private Vidas vidas;
 
 	private GameComponent<GameScene> backGround;
 	private Dimension gameDimension;
@@ -27,16 +38,25 @@ public class ArkanoidScene extends GameScene {
 	
 	public ArkanoidScene(Dimension dim, double velocity){
 		super();
+		
+		this.puntajeParaVida = 2000;
+		this.nuevoPuntajeParaVida = puntajeParaVida;
+		
 		this.velocity=velocity;
 		this.gameDimension= dim;
+		this.vidas =new Vidas(3,dim);
+		this.addComponent(vidas);
+		this.puntaje = new Puntaje(dim);
+		this.addComponent(puntaje);
 		this.buildBackground(Color.white);
 		this.barrita=new Barrita(this.gameDimension, playState);
 		this.pelotita= new Pelotita(this.gameDimension);
 		pelotita.newGamePos(barrita);
 		this.addComponent(pelotita);
 		this.addComponent(barrita);
-		this.ladrillos = new Ladrillos(dim, 50, 25, 5);
+		this.ladrillos = new Ladrillos(dim, 50, 25, 5, 50);
 		this.addComponents(ladrillos.getLadrillos());
+		
 		
 		
 		
@@ -73,9 +93,37 @@ public class ArkanoidScene extends GameScene {
 		return this.pelotita;
 	}
 	
+	
+	
+	public void ganarVida(){
+		if(this.puntaje.getPuntos() >= this.nuevoPuntajeParaVida)
+		{
+			this.vidas.agregarVida();
+		//this.vidas.setVida(this.vidas.getVida()+1);
+		this.nuevoPuntajeParaVida = this.nuevoPuntajeParaVida + this.puntajeParaVida;
+	}
+		}
+	
 	protected void youLose(){
+		this.vidas.setVida(this.vidas.getVida() - 1);
+		if(this.vidas.getVida() == 0){
+			this.reconstruirLadrillos();
+			
+			resetBall();
+			this.removeComponent(this.puntaje);
+			this.puntaje = new Puntaje(gameDimension);
+			this.addComponent(puntaje);
+			this.removeComponent(this.vidas);
+			this.vidas =new Vidas(3,gameDimension);
+			this.addComponent(vidas);
+			
+		}
+		else{
 //		Throw message here if someone lose
-		resetBall();
+		//this.buildBackground(Color.white);
+		
+		this.resetBall();
+		}
 	}
 	
 	private void resetBall() {
@@ -92,24 +140,24 @@ public class ArkanoidScene extends GameScene {
 		
 		this.velocity = velocity;
 		this.playState = false;
+		
 		//this.destruirLadrillos();
 		//this.reconstruirLadrillos();
-		
 	}
 	
 	
-	/*
-	INTENTO FALLIDO DE CONSTRUCCION Y RECONSTRUCCION DE LOS LADRILLOS
-	
-	public void destruirLadrillos(){
-	this.removeComponents(this.ladrillos.getLadrillos());	
-	}
+	/*	*/
+	//INTENTO FALLIDO DE CONSTRUCCION Y RECONSTRUCCION DE LOS LADRILLOS
+	//Este metodo esta mal
+	//public void destruirLadrillos(){
+	//this.removeComponents(this.ladrillos.getLadrillos());	
+	//}
 	
 	public void reconstruirLadrillos(){
-		this.ladrillos = new Ladrillos(gameDimension, 50, 25, 5);
+		this.ladrillos = new Ladrillos(gameDimension, 50, 25, 5, 50);
 		this.addComponents(ladrillos.getLadrillos());
 	}
-	*/
+
 	
 	void continueGame(double velocity){
 		//this.buildBackground(Color.white);
@@ -161,6 +209,8 @@ public class ArkanoidScene extends GameScene {
 				{
 				//encontre = true;
 				this.ladrilloEnColision = this.ladrillos.getLadrillos().get(n);
+				this.ladrillos.getLadrillos().get(n).sumarPuntaje(this);
+				this.ganarVida();
 				this.ladrillos.getLadrillos().remove(this.ladrillos.getLadrillos().get(n));
 				b = true;
 				}
@@ -299,8 +349,26 @@ public class ArkanoidScene extends GameScene {
 		return retornar;
 		
 	}
-	
-	
+
+
+	public int getPuntos() {
+		return puntos;
+	}
+
+
+	public void setPuntos(int puntos) {
+		this.puntos = puntos;
+	}
+
+
+	public Puntaje getPuntaje() {
+		return puntaje;
+	}
+
+
+	public void setPuntaje(Puntaje puntaje) {
+		this.puntaje = puntaje;
+	}
 	
 	
 	

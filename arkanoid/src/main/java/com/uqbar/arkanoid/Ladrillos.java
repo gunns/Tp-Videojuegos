@@ -15,16 +15,16 @@ public class Ladrillos {
 	
 	
 	
-	public Ladrillos(Dimension dim, double anchoLadrillo, double alturaLadrillo, int filas){
+	public Ladrillos(Dimension dim, double anchoLadrillo, double alturaLadrillo, int filas, int valor){
 		this.ladrillos = new ArrayList<Ladrillo>();
 		this.anchoLadrillo = anchoLadrillo;
 		this.alturaLadrillo = alturaLadrillo;
-		this.colocarLadrillos(dim, filas);
+		this.colocarLadrillos(dim, filas, valor);
 		
 		
 		}
 	
-	public void colocarLadrillos(Dimension dim, int filas){
+	public void colocarLadrillos(Dimension dim, int filas, int valor){
 		
 		double m = dim.getWidth();
 		
@@ -37,7 +37,7 @@ public class Ladrillos {
 				{
 		for(double inicio = espacioCostados; (inicio) < (m - espacioCostados) ; inicio = inicio + anchoLadrillo + 2)
 			{
-			colocarLadrillo(dim, inicio , veces, espacioArriba);
+			colocarLadrillo(dim, inicio , veces, espacioArriba, valor);
 			}
 		espacioArriba = espacioArriba + 2;
 				}
@@ -45,8 +45,8 @@ public class Ladrillos {
 		
 	}
 		
-	private void colocarLadrillo(Dimension dim, double inicio, double filas, double espacioArriba) {
-		Ladrillo ladrillo = new Ladrillo(dim, (inicio), (espacioArriba + (filas * this.alturaLadrillo)), this.randomColor());
+	private void colocarLadrillo(Dimension dim, double inicio, double filas, double espacioArriba, int valor) {
+		Ladrillo ladrillo = new Ladrillo(dim, (inicio), (espacioArriba + (filas * this.alturaLadrillo)), this.randomColor(), valor);
 		this.ladrillos.add(ladrillo);
 		
 	}	

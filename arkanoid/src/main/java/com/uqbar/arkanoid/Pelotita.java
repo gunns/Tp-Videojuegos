@@ -116,7 +116,6 @@ public class Pelotita extends GameComponent<ArkanoidScene> {
 				
 	   }
 	}
-
 			
 			
 			
@@ -150,7 +149,7 @@ public class Pelotita extends GameComponent<ArkanoidScene> {
 		if (this.estaCreciendoY) {
 			this.setY(this.getY() + this.getScene().getVelocity()
 					* deltaState.getDelta());
-			if (this.getY() >= this.gameDimension.getWidth()) {
+			if (this.getY() > this.gameDimension.getWidth()) {
 				this.getScene().youLose();
 			}
 		}
