@@ -133,6 +133,9 @@ public class ArkanoidScene extends GameScene {
 		this.removeComponent(this.vidas);
 		this.vidas =new Vidas(3,gameDimension);
 		this.addComponent(vidas);
+		this.apareceCartel = false;
+		
+		//this.setPlayState(false);
 		
 	}
 	

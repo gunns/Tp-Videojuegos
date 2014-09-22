@@ -42,13 +42,13 @@ public class Pelotita extends GameComponent<ArkanoidScene> {
 
 	@Override
 	public void update(DeltaState deltaState) {
-
+		if (deltaState.isKeyPressed(Key.P) ){
+			
+			//this.getScene().stop();
+			this.getScene().setSystemPause(!this.getScene().getSystemPause());
+		}
 		if (this.getScene().getPlayState()) {
-			if (deltaState.isKeyPressed(Key.P) ){
-					
-				//this.getScene().stop();
-				this.getScene().setSystemPause(!this.getScene().getSystemPause());
-			}
+			
 				mover(deltaState);
 			this.accionDeBolita();
 		}
