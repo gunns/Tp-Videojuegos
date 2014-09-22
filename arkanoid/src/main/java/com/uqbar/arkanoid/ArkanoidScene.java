@@ -20,7 +20,7 @@ public class ArkanoidScene extends GameScene {
 	private Puntaje puntaje;
 	private int puntajeParaVida;
 	private int nuevoPuntajeParaVida;
-	
+	private boolean apareceCartel;
 	
 	private Vidas vidas;
 
@@ -39,6 +39,8 @@ public class ArkanoidScene extends GameScene {
 	public ArkanoidScene(Dimension dim, double velocity){
 		super();
 		
+		
+		this.apareceCartel = false;
 		this.puntajeParaVida = 2000;
 		this.nuevoPuntajeParaVida = puntajeParaVida;
 		
@@ -54,6 +56,7 @@ public class ArkanoidScene extends GameScene {
 		pelotita.newGamePos(barrita);
 		this.addComponent(pelotita);
 		this.addComponent(barrita);
+		
 		this.ladrillos = new Ladrillos(dim, 50, 25, 5, 50);
 		this.addComponents(ladrillos.getLadrillos());
 		
@@ -107,15 +110,10 @@ public class ArkanoidScene extends GameScene {
 	protected void youLose(){
 		this.vidas.setVida(this.vidas.getVida() - 1);
 		if(this.vidas.getVida() == 0){
-			this.reconstruirLadrillos();
-			
-			resetBall();
-			this.removeComponent(this.puntaje);
-			this.puntaje = new Puntaje(gameDimension);
-			this.addComponent(puntaje);
-			this.removeComponent(this.vidas);
-			this.vidas =new Vidas(3,gameDimension);
-			this.addComponent(vidas);
+			this.cartelLose();
+			this.apareceCartel = true;
+			this.stop();
+			this.setPlayState(false);
 			
 		}
 		else{
@@ -126,13 +124,25 @@ public class ArkanoidScene extends GameScene {
 		}
 	}
 	
+	public void newGame(){
+		this.reconstruirLadrillos();
+		resetBall();
+		this.removeComponent(this.puntaje);
+		this.puntaje = new Puntaje(gameDimension);
+		this.addComponent(puntaje);
+		this.removeComponent(this.vidas);
+		this.vidas =new Vidas(3,gameDimension);
+		this.addComponent(vidas);
+		
+	}
+	
 	private void resetBall() {
-		newGame(250);
+		newTry(250);
 		setSystemPause(false);		
 	}
 
 
-	void newGame(double velocity) {
+	void newTry(double velocity) {
 		this.buildBackground(Color.white);
 		this.barrita.setX(800/2-this.barrita.getAppearance().getWidth());
 		this.barrita.setY(600-(this.barrita.getAppearance().getHeight())-5);
@@ -203,7 +213,7 @@ public class ArkanoidScene extends GameScene {
 	public boolean hayColisionConUnLadrillo(){
 		boolean b = false;
 		//boolean encontre = false;
-		for(int n = 1;(n <  (this.ladrillos.getLadrillos().size())); n++)
+		for(int n = 0;(n <  (this.ladrillos.getLadrillos().size())); n++)
 			{
 			if(this.ladrilloSeRompe(this.ladrillos.getLadrillos().get(n)))
 				{
@@ -213,6 +223,14 @@ public class ArkanoidScene extends GameScene {
 				this.ganarVida();
 				this.ladrillos.getLadrillos().remove(this.ladrillos.getLadrillos().get(n));
 				b = true;
+				if(this.ladrillos.getLadrillos().size() == 0)
+					{
+					this.cartelWin();
+					this.apareceCartel = true;
+					
+					this.stop();
+					this.setPlayState(false);
+					}
 				}
 			}
 		return b;
@@ -349,6 +367,45 @@ public class ArkanoidScene extends GameScene {
 		return retornar;
 		
 	}
+	
+	
+public void cartelWin(){
+	this.buildBackground(Color.white);
+	this.addComponent(new Cartel(this.gameDimension));
+	this.setPlayState(false);
+}
+
+public void cartelLose(){
+	this.buildBackground(Color.white);
+	this.addComponent(new Cartel(this.gameDimension, this.puntaje.getPuntos()));
+	this.setPlayState(false);
+}
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 	public int getPuntos() {
@@ -369,6 +426,44 @@ public class ArkanoidScene extends GameScene {
 	public void setPuntaje(Puntaje puntaje) {
 		this.puntaje = puntaje;
 	}
+
+
+	public Vidas getVidas() {
+		return vidas;
+	}
+
+
+	public void setVidas(Vidas vidas) {
+		this.vidas = vidas;
+	}
+
+
+	public boolean isApareceCartel() {
+		return apareceCartel;
+	}
+
+
+	public void setApareceCartel(boolean apareceCartel) {
+		this.apareceCartel = apareceCartel;
+	}
+
+
+	public boolean pelotitaPegadaALaBarrita() {
+		/*setX(barrita.getX() + barrita.getAppearance().getWidth() / 2
+					- getAppearance().getWidth() / 2);
+			setY(barrita.getY() - getAppearance().getWidth());
+		  */
+		
+
+			
+					return(this.pelotita.getY()// + pelotita.getAppearance().getWidth() ==
+							==(
+									barrita.getY() 
+									- pelotita.getAppearance().getWidth()
+								));
+	}
+
+	
 	
 	
 	

@@ -15,6 +15,9 @@ public class Barrita extends GameComponent<ArkanoidScene>{
 	private boolean playState = true;
 	
 	public Barrita(Dimension dim, boolean playState){
+		
+		
+		
 		this.setAppearance(new Rectangle(Color.black,80,10));
 		this.gameDimension= dim;
 		this.playState = playState;

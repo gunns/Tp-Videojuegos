@@ -44,94 +44,87 @@ public class Pelotita extends GameComponent<ArkanoidScene> {
 	public void update(DeltaState deltaState) {
 
 		if (this.getScene().getPlayState()) {
-			if (deltaState.isKeyPressed(Key.A)) {
-				this.getScene().stop();
-				this.getScene().setSystemPause(true);
-			} else {
+			if (deltaState.isKeyPressed(Key.P) ){
+					
+				//this.getScene().stop();
+				this.getScene().setSystemPause(!this.getScene().getSystemPause());
+			}
 				mover(deltaState);
-			}
-			if (this.getScene().hayColision()) {
-				this.estaCreciendoY = false;
-			}
-			
-			if(this.getScene().hayColisionConUnLadrillo()){
-				
-				/*if(this.getScene().colisionEnX(this))
-					{
-					this.setEstaCreciendoX(!this.estaCreciendoX);
-					}
-			}
-			if(this.getScene().colisionEnY(this))
-				{
-				this.setEstaCreciendoY(!this.estaCreciendoY);
-				}
-	}
-	*/
-		//this.getScene().stop();
-	//}
-		if(this.getScene().colisionDerecha(this) && this.getScene().colisionInferior(this))
-		{
-		this.setEstaCreciendoX(true);
-		this.setEstaCreciendoY(true);
+			this.accionDeBolita();
 		}
 		else
 		{
-		if(this.getScene().colisionDerecha(this) && this.getScene().colisionSuperior(this))
-			{
-			this.setEstaCreciendoX(true);
-			this.setEstaCreciendoY(false);
-			}
-		else
-		 if(this.getScene().colisionIzquierda(this) && this.getScene().colisionSuperior(this))
-			{
-			this.setEstaCreciendoX(false);
-			this.setEstaCreciendoY(false);
-			}
-		 else
-			 if(this.getScene().colisionIzquierda(this) && this.getScene().colisionInferior(this))
-				{
-				this.setEstaCreciendoX(true);
-				this.setEstaCreciendoY(true);
-				}
-			 else
-		 if(this.getScene().colisionDerecha(this))
-			{
-			this.setEstaCreciendoX(true);
-			}
-		 else
-		if(this.getScene().colisionIzquierda(this))
-		{
-			this.setEstaCreciendoX(false);
-		}
-		else
-		if(this.getScene().colisionSuperior(this))
-		{
-			this.setEstaCreciendoY(false);
-		}
-		else
-		if(this.getScene().colisionInferior(this))
-		{
-		this.setEstaCreciendoY(true);
-		}
-				
-	   }
-	}
-			
-			
-			
-			
-			
-
-		} else if (deltaState.isKeyPressed(Key.S)) {
-			this.getScene().newGame(250);
-			this.getScene().setSystemPause(false);
-		} else if (deltaState.isKeyPressed(Key.A)) {
+		if (deltaState.isKeyPressed(Key.A) && !this.getScene().isApareceCartel() && this.getScene().pelotitaPegadaALaBarrita()) {
 			this.getScene().continueGame(250);
 			this.getScene().setSystemPause(false);
-		}
+		}																			}
 	}
+	
+	public void accionDeBolita(){
+		if (this.getScene().hayColision()) {
+			this.estaCreciendoY = false;
+		}
+		
+		if(this.getScene().hayColisionConUnLadrillo()){
+			
+	//this.getScene().stop();
+//}
+	if(this.getScene().colisionDerecha(this) && this.getScene().colisionInferior(this))
+	{
+	this.setEstaCreciendoX(true);
+	this.setEstaCreciendoY(true);
+	}
+	else
+	{
+	if(this.getScene().colisionDerecha(this) && this.getScene().colisionSuperior(this))
+		{
+		this.setEstaCreciendoX(true);
+		this.setEstaCreciendoY(false);
+		}
+	else
+	 if(this.getScene().colisionIzquierda(this) && this.getScene().colisionSuperior(this))
+		{
+		this.setEstaCreciendoX(false);
+		this.setEstaCreciendoY(false);
+		}
+	 else
+		 if(this.getScene().colisionIzquierda(this) && this.getScene().colisionInferior(this))
+			{
+			this.setEstaCreciendoX(true);
+			this.setEstaCreciendoY(true);
+			}
+		 else
+	 if(this.getScene().colisionDerecha(this))
+		{
+		this.setEstaCreciendoX(true);
+		}
+	 else
+	if(this.getScene().colisionIzquierda(this))
+	{
+		this.setEstaCreciendoX(false);
+	}
+	else
+	if(this.getScene().colisionSuperior(this))
+	{
+		this.setEstaCreciendoY(false);
+	}
+	else
+	if(this.getScene().colisionInferior(this))
+	{
+	this.setEstaCreciendoY(true);
+	}
+		}
+		
+		}
+		
+	}
+	
+	
 
+		
 	private void mover(DeltaState deltaState) {
+		if(!this.getScene().getSystemPause()){
+			if(playState && this.getScene().getPlayState()){
 		if (this.estaCreciendoX) {
 			this.setX(this.getX() + this.getScene().getVelocity()
 					* deltaState.getDelta());
@@ -160,7 +153,10 @@ public class Pelotita extends GameComponent<ArkanoidScene> {
 			if (this.getY() <= 0) {
 				this.estaCreciendoY = true;
 			}
+			
 		}
+		}
+	}
 	}
 
 	public void newGamePos(Barrita barrita) {
